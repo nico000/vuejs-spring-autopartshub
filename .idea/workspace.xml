@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0cf8944c-6bf2-4353-beac-6a05f9c7640f" name="Changes" comment="" />
+    <list default="true" id="0cf8944c-6bf2-4353-beac-6a05f9c7640f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,9 +25,10 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/benja/IdeaProjects/vuejs-spring-autopartshub/services_autoparts",
+    "last_opened_file_path": "C:/Users/nico0/Desktop/Cours/Composant système information/autoparts/vuejs-spring-autopartshub/services_autoparts",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
