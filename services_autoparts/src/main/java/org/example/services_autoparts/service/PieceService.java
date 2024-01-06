@@ -20,6 +20,10 @@ public class PieceService {
         return pieceRepository.findAll();
     }
 
+    public Piece getPieceBy(ObjectId id) {
+        return pieceRepository.getPieceBy(id);
+    }
+
     public Piece create(PieceRequestCreate request) {
         final Piece piece = Piece.builder()
                 .name(request.getName())

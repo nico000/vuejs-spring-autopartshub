@@ -7,7 +7,19 @@ En créant une API qui gère les pièces auto, en les stockant dans une base de 
 ## Table des matières
 
 - [Introduction](#introduction)
+- [Prérequis](#prérequis)
+- [Comment bien commencer](#comment-bien-commencer)
+- [Variable d'environement](#variable-d-environement)
+- [Déploiement](#déploiement)
 
 ## Introduction
 
 Le 
+
+## Prérequis
+
+## Comment bien commencer
+
+## Variable d environement
+
+## Déploiement

@@ -7,9 +7,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.example.services_autoparts.api.dto.PieceDto;
 import org.example.services_autoparts.api.request.PieceRequestCreate;
 import org.example.services_autoparts.api.request.PieceRequestUpdate;
+import org.example.services_autoparts.api.response.PieceResponse;
 import org.example.services_autoparts.api.response.PiecesResponse;
 import org.example.services_autoparts.entity.Piece;
 import org.example.services_autoparts.mapper.PieceMapper;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pieces")
+@RequestMapping("/piece")
 @Slf4j
 @RequiredArgsConstructor
 @Tag(
@@ -33,7 +35,7 @@ public class PieceController {
 
     private final PieceMapper pieceMapper;
 
-    @GetMapping
+    @GetMapping("/getAll")
     @Operation(
             summary = "Get all pieces",
             description = "Get all pieces",
@@ -58,7 +60,31 @@ public class PieceController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/create")
+    @GetMapping("/{pieceId}")
+    @Operation(
+            summary = "Get piece by id",
+            description = "Get piece by id",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "The piece",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @io.swagger.v3.oas.annotations.media.Schema(
+                                            implementation = PieceResponse.class
+                                    )
+                            )
+                    )
+            }
+    )
+    public ResponseEntity<PieceResponse> getPieceBy(ObjectId id) {
+        final Piece piece = pieceService.getPieceBy(id);
+        final PieceResponse response = pieceMapper.toResponse(piece);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping
     @Operation(
             summary = "Create piece",
             description = "Create piece from the provided data",

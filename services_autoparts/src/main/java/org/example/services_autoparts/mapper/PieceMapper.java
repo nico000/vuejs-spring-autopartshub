@@ -1,6 +1,7 @@
 package org.example.services_autoparts.mapper;
 
 import org.example.services_autoparts.api.dto.PieceDto;
+import org.example.services_autoparts.api.response.PieceResponse;
 import org.example.services_autoparts.api.response.PiecesResponse;
 import org.example.services_autoparts.entity.Piece;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,11 @@ public class PieceMapper {
 
         return PiecesResponse.builder()
                 .pieces(piecesDto)
+                .build();
+    }
+    public PieceResponse toResponse(Piece piece) {
+        return PieceResponse.builder()
+                .piece(toDto(piece))
                 .build();
     }
 }

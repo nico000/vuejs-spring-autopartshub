@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RepositoryRestResource(exported = false)
 public interface PieceRepository extends MongoRepository<Piece, ObjectId> {
-
+    Piece getPieceBy(ObjectId id);
 }
