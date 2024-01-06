@@ -15,5 +15,5 @@ spring:
     data:
         mongodb:
         uri: ${DB_URL:mongodb://localhost:27017}
-        database: ${DB_NAME:equipment_service_db}
+        database: ${DB_NAME:autoparts_service_db}
         auto-index-creation: true
