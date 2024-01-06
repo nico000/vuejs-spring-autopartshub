@@ -58,7 +58,7 @@ public class PieceController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/create")
+    @PostMapping("/create")
     @Operation(
             summary = "Create piece",
             description = "Create piece from the provided data",
