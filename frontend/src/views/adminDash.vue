@@ -101,6 +101,10 @@ export default {
     deleteArticle(id) {
       ApiPiece.deletePiece(id);
       this.items = this.items.filter(item => item.id !== id);
+    },
+    updateCart() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      this.totalQuantity = cart.reduce((acc, item) => acc + item.quantity, 0);
     }
   }
 }

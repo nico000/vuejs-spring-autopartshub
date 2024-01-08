@@ -2,8 +2,10 @@ version: "3"
 
 services:
 
-
   backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
     image: autoparts-back:0.1.0
     environment:
       DB_URL: mongodb://mongo
@@ -23,6 +25,9 @@ services:
       - db:/data/db/
 
   frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
     image: autoparts-front:0.1.0
     environment:
       VUE_APP_API_URL : "http://localhost:8080"
