@@ -1,13 +1,33 @@
+version: "3"
+
 services:
-  frontend:
-    image: example/webapp
-    build: ./webapp
+
 
   backend:
-    image: example/database
-    build:
-      context: backend
-      dockerfile: ../backend.Dockerfile
+    image: autoparts-back:0.1.0
+    environment:
+      DB_URL: mongodb://mongo
+    ports:
+      - "8081:8081"
 
-  custom:
-    build: ~/custom
+  mongo:
+    image: mongo:4.4
+    ports:
+      - "27017:27017"
+
+    environment:
+      MONGO_INITDB_USERNAME: $MONGO_ROOT_USERNAME
+      MONGO_INITDB_PASSWORD: $MONGO_ROOT_PASSWORD
+      MONGO_INITDB_DATABASE: autoparts_service_db
+    volumes:
+      - db:/data/db/
+
+  frontend:
+    image: autoparts-front:0.1.0
+    environment:
+      VUE_APP_API_URL : "http://localhost:8080"
+    ports:
+      - "8080:80"
+
+volumes:
+  db:

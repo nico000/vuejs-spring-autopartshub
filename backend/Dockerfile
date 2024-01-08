@@ -5,7 +5,7 @@ LABEL maintenair="Laniau Nicolas"
 LABEL description="Autoparts service"
 
 # [ Environnement variables]
-ENV SERVER_PORT=8080
+ENV SERVER_PORT=8081
 
 # [Argument]
 ARG JAR_FILE=target/backend-*.jar

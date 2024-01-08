@@ -9,7 +9,7 @@ services:
     environment:
       MONGO_INITDB_USERNAME: $MONGO_ROOT_USERNAME
       MONGO_INITDB_PASSWORD: $MONGO_ROOT_PASSWORD
-      MONGO_INITDB_DATABASE: backend_db
+      MONGO_INITDB_DATABASE: autoparts_service_db
     volumes:
       - db:/data/db/
 
