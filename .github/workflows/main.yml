@@ -27,7 +27,7 @@ jobs:
       - name: "Checkout source"
         uses: actions/checkout@v1
 
-      - name: Build image
+      - name: "Build image"
         working-directory: ./DEMO
         run: docker compose -f docker-compose.yml build
 
