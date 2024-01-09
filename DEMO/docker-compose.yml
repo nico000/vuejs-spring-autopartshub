@@ -30,7 +30,7 @@ services:
       dockerfile: Dockerfile
     image: autoparts-front:0.1.0
     environment:
-      VUE_APP_API_URL : "http://localhost:8080"
+      VITE_APP_API_ROOT_URL: http://localhost:8081
     ports:
       - "8080:80"
 

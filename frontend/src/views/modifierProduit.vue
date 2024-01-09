@@ -11,22 +11,22 @@
           <form @submit.prevent="submitForm">
             <div class="mb-4">
               <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Nom</label>
-              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Nom" v-model="name">
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" type="text" placeholder="Nom" v-model="item.name">
             </div>
 
             <div class="mb-4">
               <label class="block text-gray-700 text-sm font-bold mb-2" for="description">Description</label>
-              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" type="text" placeholder="Description" v-model="description">
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" type="text" placeholder="Description" v-model="item.description">
             </div>
 
             <div class="mb-4">
               <label class="block text-gray-700 text-sm font-bold mb-2" for="price">Prix</label>
-              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="price" type="number" step=".01" placeholder="Prix" v-model="price">
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="price" type="number" step=".01" placeholder="Prix" v-model="item.price">
             </div>
 
             <div class="mb-6">
               <label class="block text-gray-700 text-sm font-bold mb-2" for="image">Image URL</label>
-              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="image" type="text" placeholder="URL de l'image" v-model="image">
+              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="image" type="text" placeholder="URL de l'image" v-model="item.image">
             </div>
 
             <div class="flex items-center justify-center">
@@ -43,6 +43,7 @@
 
 <script>
 import {useRoute} from "vue-router";
+import router from "@/router/index.js";
 import ApiPiece from "@/API/ApiPiece.js";
 export default {
   data() {
@@ -52,28 +53,42 @@ export default {
         description: '',
         price: '',
         image: ''
-      }
+      },
+      route_id : null
     };
   },
-  async mounted() {
-    const route = useRoute();
-    const response = await ApiPiece.getPiece(route.params.id);
-    const infos = response.data.piece;
-
-    console.log(infos);
-    this.name = infos.name;
-    this.description = infos.description;
-    this.price = infos.price;
-    this.image = infos.image;
+  beforeMount() {
+    this.getProduit();
   },
   methods: {
-    submitForm() {
+    async submitForm() {
       if (this.item.name !== '' && this.item.description !== '' && this.item.image !== '' && this.item.image !== '') {
-        ApiPiece.updatePiece(useRoute().params.id, this.item);
-      } else {
+            
+        try {
+          await ApiPiece.updatePiece(this.route_id, this.item);
+          router.push("/admin");
+        } catch (error) {
+          console.error("Error lors de la modification", error);
+        }
+      }
+      else {
         alert('Tous les champs doivent être renseignés.');
       }
-    }
+    },
+    async getProduit() {
+      try {
+          const route = useRoute();
+          this.route_id = route.params.id;
+          const response = await ApiPiece.getPiece(this.route_id);
+          const infos = response.data.piece;
+
+          console.log(infos);
+          this.item = infos;
+
+      } catch (error) {
+        console.error("Error lors de la recup du produit", error);
+      }
+    },
   }
 }
 </script>
