@@ -22,10 +22,14 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TTL_IMAGE_NAME: autoparts
-      TTL_IMAGE_DURATION: 1h
+      TTL_IMAGE_DURATION: 30min
     steps:
       - name: "Checkout source"
         uses: actions/checkout@v1
+
+      - name: Build image
+        working-directory: ./DEMO
+        run: docker compose -f docker-compose.yml build
 
 #      - name: "Set up JDK 17"
 #        uses: actions/setup-java@v1
