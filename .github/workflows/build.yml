@@ -33,7 +33,7 @@ jobs:
           java-version: 17
 
       - name: "Build with Maven"
-	      working-directory: ./backend
+        working-directory: ./backend
         run: mvn clean package
 
       - name: "Build image tag from inputs"
