@@ -1,4 +1,4 @@
-name: Build & Push to ttl.sh
+name: Test ttl
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       imageName:
         description: The name of the image (used for tag)
         required: true
-        default: ecp_equipment_service
+        default: autoparts
       imageDuration:
         description: The lifetime of the image on the repository
         required: true
