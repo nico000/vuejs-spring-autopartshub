@@ -13,6 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Build and package the Java application
+        run: |
+          cd backend
+          ./mvnw clean package -DskipTests
+
       - name: Display directory contents
         run: ls -R ./backend
 
