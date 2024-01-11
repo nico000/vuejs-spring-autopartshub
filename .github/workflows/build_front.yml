@@ -13,27 +13,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./backend
-          file: ./backend/Dockerfile
-          push: true
-          tags: ttl.sh/autoparts-backend:1h  # Remplacez ttl.sh/username par votre nom d'utilisateur
+      - name: Build Docker images
+        run: |
+          docker-compose -f ./DEMO/docker-compose.yml build
 
-      - name: Deploy to ttl.sh
-        uses: ttl.sh/deploy-action@v1
-        with:
-          image: ttl.sh/username/autoparts-backend:1h  # Remplacez ttl.sh/username par votre nom d'utilisateur
-          service: backend
-          env: |
-            DB_URL=mongodb://mongo
-            VITE_APP_API_ROOT_URL=http://localhost:8081
+      - name: Set up Docker Compose
+        run: |
+          docker-compose -f ./DEMO/docker-compose.yml up -d
+          sleep 30  # Give services some time to start
 
-      - name: Deploy frontend to ttl.sh (Assuming you have a frontend Docker image)
-        uses: ttl.sh/deploy-action@v1
-        with:
-          image: ttl.sh/username/autoparts-frontend:1h  # Remplacez ttl.sh/username par votre nom d'utilisateur
-          service: frontend
-          env: |
-            VITE_APP_API_ROOT_URL=http://localhost:8081
+      - name: Deploy backend image to ttl.sh
+        run: |
+          docker tag autoparts-back:0.1.0 ttl.sh/autoparts-back:1h
+          docker push ttl.sh/autoparts-back:1h
+
+      - name: Deploy frontend image to ttl.sh
+        run: |
+          docker tag autoparts-front:0.1.0 ttl.sh/autoparts-front:1h
+          docker push ttl.sh/autoparts-front:1h
+
+      - name: Deploy MongoDB image to ttl.sh
+        run: |
+          docker tag mongo:4.4 ttl.sh/autoparts-db:1h
+          docker push ttl.sh/autoparts-db:1h
+
+      - name: Clean up
+        run: |
+          docker-compose -f ./DEMO/docker-compose.yml down
