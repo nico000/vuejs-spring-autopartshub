@@ -11,18 +11,21 @@ services:
       DB_URL: mongodb://mongo
     ports:
       - "8081:8081"
+    networks:
+      - your_network_name
 
   mongo:
     image: mongo:4.4
     ports:
       - "27017:27017"
-
     environment:
       MONGO_INITDB_USERNAME: $MONGO_ROOT_USERNAME
       MONGO_INITDB_PASSWORD: $MONGO_ROOT_PASSWORD
       MONGO_INITDB_DATABASE: autoparts_service_db
     volumes:
       - db:/data/db/
+    networks:
+      - your_network_name
 
   frontend:
     build:
@@ -30,9 +33,14 @@ services:
       dockerfile: Dockerfile
     image: autoparts-front:0.1.0
     environment:
-      VITE_APP_API_ROOT_URL: http://localhost:8081
+      VITE_APP_API_ROOT_URL: http://mongo:8081
     ports:
       - "8080:80"
+    networks:
+      - your_network_name
 
 volumes:
   db:
+
+networks:
+  your_network_name:
