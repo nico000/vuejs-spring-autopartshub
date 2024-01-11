@@ -3,16 +3,16 @@ version: "3"
 services:
 
   backend:
-    build:
-      context: ../backend
-      dockerfile: Dockerfile
-    image: autoparts-back:0.1.0
-    environment:
-      DB_URL: mongodb://mongo
-    ports:
-      - "8081:8081"
-    networks:
-      - autoparts_network
+      build:
+        context: ../backend
+        dockerfile: Dockerfile
+      image: autoparts-back:0.1.0
+      environment:
+        DB_URL: mongodb://mongo:27017  # Utiliser le nom du service Docker
+      ports:
+        - "8081:8081"
+      networks:
+        - autoparts_network
 
   mongo:
     image: mongo:4.4
