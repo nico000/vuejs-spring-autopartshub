@@ -27,17 +27,17 @@ services:
     networks:
       - autoparts_network
 
-frontend:
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
-    image: autoparts-front:0.1.0
-    environment:
-      VITE_APP_API_ROOT_URL: http://backend:8081  # Utiliser le nom du service Docker
-    ports:
-      - "8080:80"
-    networks:
-      - autoparts_network
+  frontend:
+      build:
+        context: ../frontend
+        dockerfile: Dockerfile
+      image: autoparts-front:0.1.0
+      environment:
+        VITE_APP_API_ROOT_URL: http://backend:8081  # Utiliser le nom du service Docker
+      ports:
+        - "8080:80"
+      networks:
+        - autoparts_network
 
 volumes:
   db:
