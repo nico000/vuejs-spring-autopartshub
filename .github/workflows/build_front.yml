@@ -29,6 +29,9 @@ jobs:
         run: |
           docker-compose -f ./DEMO/docker-compose.yml build
 
+      - name: Display Docker network information
+        run: docker network inspect your_network_name
+
       - name: Set up Docker Compose
         run: |
           docker-compose -f ./DEMO/docker-compose.yml up -d
@@ -37,17 +40,17 @@ jobs:
       - name: Deploy backend image to ttl.sh
         run: |
           docker tag autoparts-back:0.1.0 ttl.sh/autoparts-back:1h
-          docker push ttl.sh/autoparts-back:1h
+      #    docker push ttl.sh/autoparts-back:1h
 
       - name: Deploy frontend image to ttl.sh
         run: |
           docker tag autoparts-front:0.1.0 ttl.sh/autoparts-front:1h
-          docker push ttl.sh/autoparts-front:1h
+     #     docker push ttl.sh/autoparts-front:1h
 
       - name: Deploy MongoDB image to ttl.sh
         run: |
           docker tag mongo:4.4 ttl.sh/autoparts-db:1h
-          docker push ttl.sh/autoparts-db:1h
+      #    docker push ttl.sh/autoparts-db:1h
 
       - name: Clean up
         run: |
