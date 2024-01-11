@@ -19,7 +19,8 @@ USER user
 
 # [Action]
 WORKDIR /opt/app
-COPY ${JAR_FILE} app.jar
+#COPY ${JAR_FILE} app.jar
+COPY backend/target/backend-*.jar app.jar
 
 # [Ports]
 EXPOSE ${SERVER_PORT}
