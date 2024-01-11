@@ -48,12 +48,12 @@ jobs:
       - name: Deploy frontend image to ttl.sh
         run: |
           docker tag autoparts-front:0.1.0 ttl.sh/autoparts-front:1h
-          docker push ttl.sh/autoparts-front:1h
+       #   docker push ttl.sh/autoparts-front:1h
 
       - name: Deploy MongoDB image to ttl.sh
         run: |
           docker tag mongo:4.4 ttl.sh/autoparts-db:1h
-          docker push ttl.sh/autoparts-db:1h
+        #  docker push ttl.sh/autoparts-db:1h
 
       - name: Clean up
         run: |
