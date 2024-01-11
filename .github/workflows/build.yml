@@ -1,18 +1,18 @@
-name: Test ttl
+name: Push ttl backend
 
 on:
   push:
     branches:
       - 'main'
       - 'release/*'
-      - 'master'
+    #  - 'master'
 
   workflow_dispatch:
     inputs:
       imageName:
-        description: The name of the image (used for tag)
+        description: Image du backend réalisé sous le framework spring
         required: true
-        default: autoparts
+        default: autoparts_service
       imageDuration:
         description: The lifetime of the image on the repository
         required: true
@@ -22,7 +22,7 @@ jobs:
   build-push:
     runs-on: ubuntu-latest
     env:
-      TTL_IMAGE_NAME: ecp_equipment_service
+      TTL_IMAGE_NAME: autoparts_service
       TTL_IMAGE_DURATION: 1h
     steps:
       - name: "Checkout source"
@@ -37,12 +37,6 @@ jobs:
         working-directory: ./backend
         run: mvn clean package
 
-      - name: "Build image tag from inputs"
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: |
-          IMAGE_TAG=ttl.sh/${{ github.event.inputs.imageName }}:${{ github.event.inputs.imageDuration }}
-          echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
-
       - name: "Build image tag from env"
         if: ${{ github.event_name != 'workflow_dispatch' }}
         run: |
@@ -52,7 +46,6 @@ jobs:
       - name: "Build docker image ${{ env.IMAGE_TAG }}"
         run: |
           docker build -t ${{ env.IMAGE_TAG }} ./backend/
-
 
       - name: "Push docker image ${{ env.IMAGE_TAG }}"
         run: |
