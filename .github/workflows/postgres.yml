@@ -40,9 +40,9 @@ jobs:
           IMAGE_TAG=ttl.sh/${{ env.TTL_IMAGE_NAME }}:${{ env.TTL_IMAGE_DURATION }}
           echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
 
-      - name: "Build docker image ${{ env.IMAGE_TAG }}"
-        run: |
-          docker build -t ${{ env.IMAGE_TAG }} ./backend/
+      #- name: "Build docker image ${{ env.IMAGE_TAG }}"
+      #  run: |
+      #    docker build -t ${{ env.IMAGE_TAG }} ./backend/
 
       - name: "Push docker image ${{ env.IMAGE_TAG }}"
         run: |
