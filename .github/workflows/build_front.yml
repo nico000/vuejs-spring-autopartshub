@@ -16,6 +16,7 @@ jobs:
       - name: Build and package the Java application
         run: |
           cd backend
+          chmod +x mvnw
           ./mvnw clean package -DskipTests
 
       - name: Display directory contents
