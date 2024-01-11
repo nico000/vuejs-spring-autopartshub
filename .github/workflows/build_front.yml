@@ -37,6 +37,9 @@ jobs:
       - name: Display Docker networks
         run: docker network ls
 
+      - name: Display Docker network inspect
+        run: docker network inspect demo_autoparts_network
+
       - name: Deploy backend image to ttl.sh
         run: |
           docker tag autoparts-back:0.1.0 ttl.sh/autoparts-back:1h
