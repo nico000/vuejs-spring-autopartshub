@@ -29,13 +29,13 @@ jobs:
         run: |
           docker-compose -f ./DEMO/docker-compose.yml build
 
-      - name: Display Docker networks
-        run: docker network ls
-
       - name: Set up Docker Compose
         run: |
           docker-compose -f ./DEMO/docker-compose.yml up -d
           sleep 30  # Give services some time to start
+
+      - name: Display Docker networks
+        run: docker network ls
 
       - name: Deploy backend image to ttl.sh
         run: |

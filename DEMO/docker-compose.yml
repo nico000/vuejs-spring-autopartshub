@@ -12,7 +12,7 @@ services:
     ports:
       - "8081:8081"
     networks:
-      - your_network_name
+      - autoparts_network
 
   mongo:
     image: mongo:4.4
@@ -25,7 +25,7 @@ services:
     volumes:
       - db:/data/db/
     networks:
-      - your_network_name
+      - autoparts_network
 
   frontend:
     build:
@@ -37,10 +37,10 @@ services:
     ports:
       - "8080:80"
     networks:
-      - your_network_name
+      - autoparts_network
 
 volumes:
   db:
 
 networks:
-  your_network_name:
+  autoparts_network:
