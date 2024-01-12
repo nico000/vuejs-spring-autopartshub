@@ -3,11 +3,16 @@ name: Deploy to ttl.sh
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    env:
+      DEPLOY_BACKEND: 'false'
+      DEPLOY_FRONTEND: 'false'
+      DEPLOY_MONGODB: 'false'
 
     steps:
       - name: Checkout repository
@@ -41,19 +46,22 @@ jobs:
         run: docker network inspect demo_autoparts_network
 
       - name: Deploy backend image to ttl.sh
+        if: env.DEPLOY_BACKEND == 'true'
         run: |
           docker tag autoparts-back:0.1.0 ttl.sh/autoparts-back:1h
           docker push ttl.sh/autoparts-back:1h
 
       - name: Deploy frontend image to ttl.sh
+        if: env.DEPLOY_FRONTEND == 'true'
         run: |
           docker tag autoparts-front:0.1.0 ttl.sh/autoparts-front:1h
-       #   docker push ttl.sh/autoparts-front:1h
+          docker push ttl.sh/autoparts-front:1h
 
       - name: Deploy MongoDB image to ttl.sh
+        if: env.DEPLOY_MONGODB == 'true'
         run: |
           docker tag mongo:4.4 ttl.sh/autoparts-db:1h
-        #  docker push ttl.sh/autoparts-db:1h
+          docker push ttl.sh/autoparts-db:1h
 
       - name: Clean up
         run: |
