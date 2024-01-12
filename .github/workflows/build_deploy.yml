@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DEPLOY_BACKEND: 'true'
-      DEPLOY_FRONTEND: 'true'
+      DEPLOY_BACKEND: 'false'
+      DEPLOY_FRONTEND: 'false'
       DEPLOY_MONGODB: 'true'
 
 
@@ -64,7 +64,8 @@ jobs:
           sleep 10
 
           # Test MongoDB connection
-          docker exec mongo mongo --eval "printjson(db.serverStatus())"
+         # docker exec mongo mongo --eval "printjson(db.serverStatus())"
+         docker exec mongo mongodb://mongo:27017/autoparts_service_db --eval "printjson(db.serverStatus())
 
       - name: Deploy MongoDB image to ttl.sh
         if: env.DEPLOY_MONGODB == 'true'
