@@ -3,7 +3,7 @@ name: Deploy to ttl.sh
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
@@ -11,12 +11,12 @@ jobs:
 
     env:
       DEPLOY_BACKEND: 'true'
-      DEPLOY_FRONTEND: 'false'
-      DEPLOY_MONGODB: 'false'
+      DEPLOY_FRONTEND: 'true'
+      DEPLOY_MONGODB: 'true'
 
     services:
       mongo:
-        image: mongo:latest
+        image: mongo:4.4
         ports:
           - 27017:27017
 
@@ -61,7 +61,7 @@ jobs:
         if: env.DEPLOY_FRONTEND == 'true'
         run: |
           docker tag autoparts-front:0.1.0 ttl.sh/autoparts-front:1h
-       #   docker push ttl.sh/autoparts-front:1h
+          docker push ttl.sh/autoparts-front:1h
 
       - name: Test MongoDB Connection
         run: |
@@ -75,7 +75,7 @@ jobs:
         if: env.DEPLOY_MONGODB == 'true'
         run: |
           docker tag mongo:4.4 ttl.sh/autoparts-db:1h
-        #  docker push ttl.sh/autoparts-db:1h
+          docker push ttl.sh/autoparts-db:1h
 
       - name: Clean up
         run: |
