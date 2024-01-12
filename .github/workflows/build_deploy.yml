@@ -14,6 +14,13 @@ jobs:
       DEPLOY_FRONTEND: 'false'
       DEPLOY_MONGODB: 'false'
 
+    services:
+      mongo:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: --health-cmd "mongo --eval 'db.runCommand({ connectionStatus: 1 })'"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -55,13 +62,21 @@ jobs:
         if: env.DEPLOY_FRONTEND == 'true'
         run: |
           docker tag autoparts-front:0.1.0 ttl.sh/autoparts-front:1h
-          docker push ttl.sh/autoparts-front:1h
+       #   docker push ttl.sh/autoparts-front:1h
 
       - name: Deploy MongoDB image to ttl.sh
         if: env.DEPLOY_MONGODB == 'true'
         run: |
           docker tag mongo:4.4 ttl.sh/autoparts-db:1h
-          docker push ttl.sh/autoparts-db:1h
+        #  docker push ttl.sh/autoparts-db:1h
+
+      - name: Test MongoDB Connection
+        run: |
+          # Wait for MongoDB to be ready
+          sleep 10
+
+          # Test MongoDB connection
+          mongo --host mongo --eval "printjson(db.serverStatus())"
 
       - name: Clean up
         run: |
