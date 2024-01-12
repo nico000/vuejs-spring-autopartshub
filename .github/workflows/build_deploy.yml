@@ -19,7 +19,7 @@ jobs:
         image: mongo:latest
         ports:
           - 27017:27017
-        options: --health-cmd "mongo --eval 'db.runCommand({ connectionStatus: 1 })'"
+        options: --health-cmd "docker-compose exec mongo mongo --eval 'db.runCommand({ connectionStatus: 1 })'"
 
     steps:
       - name: Checkout repository
