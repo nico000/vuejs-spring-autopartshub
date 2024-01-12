@@ -65,7 +65,7 @@ jobs:
 
           # Test MongoDB connection
          # docker exec mongo mongo --eval "printjson(db.serverStatus())"
-         docker exec mongo mongodb://mongo:27017/autoparts_service_db --eval "printjson(db.serverStatus())
+          docker exec mongo mongodb://mongo:27017/autoparts_service_db --eval "printjson(db.serverStatus())
 
       - name: Deploy MongoDB image to ttl.sh
         if: env.DEPLOY_MONGODB == 'true'
