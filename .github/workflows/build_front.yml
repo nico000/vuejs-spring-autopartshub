@@ -3,7 +3,7 @@ name: Deploy to ttl.sh
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
