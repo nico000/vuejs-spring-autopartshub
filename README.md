@@ -23,8 +23,9 @@ Nicolas Laniau
 - [Introduction](#introduction)
 - [Prérequis](#prérequis)
 - [Comment bien commencer](#comment-bien-commencer)
-- [Variable d'environement](#variable-d-environement)
-- [Déploiement](#déploiement)
+- [Déploiement par docker compose](#Déploiement-docker-compose)
+- [Déploiement par ttl](#Déploiement-ttl)
+- [Swagger](#Swagger)
 
 ## Introduction
 
@@ -114,6 +115,11 @@ docker run -d -p 8081:8081 --network=demo_autoparts_network --name=back ttl.sh/a
 
 
 ### 6. Se rendre à l'adresse localhost:8080
+
+
+## Swagger
+
+Aller à l'adresse http://localhost:8081/swagger-ui/index.html pour le swagger  
 
 
 
