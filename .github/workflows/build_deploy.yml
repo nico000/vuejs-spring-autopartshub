@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DEPLOY_BACKEND: 'false'
+      DEPLOY_BACKEND: 'true'
       DEPLOY_FRONTEND: 'false'
-      DEPLOY_MONGODB: 'true'
+      DEPLOY_MONGODB: 'false'
 
 
     steps:
