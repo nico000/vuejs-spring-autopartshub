@@ -11,9 +11,13 @@ jobs:
 
     env:
       DEPLOY_BACKEND: 'true'
-      DEPLOY_FRONTEND: 'false'
-      DEPLOY_MONGODB: 'false'
+      DEPLOY_FRONTEND: 'true'
+      DEPLOY_MONGODB: 'true'
 
+      TTL_IMAGE_FRONT_NAME: autoparts-front
+      TTL_IMAGE_BACK_NAME: autoparts-back
+      TTL_IMAGE_DB_NAME: autoparts-db
+      TTL_IMAGE_DURATION: 1h
 
     steps:
       - name: Checkout repository
@@ -28,9 +32,6 @@ jobs:
         working-directory: ./backend
         run: mvn clean package
 
-      - name: Display directory contents
-        run: ls -R ./backend
-
       - name: Build Docker images
         run: |
           docker-compose -f ./DEMO/docker-compose.yml build
@@ -40,39 +41,23 @@ jobs:
           docker-compose -f ./DEMO/docker-compose.yml up -d
           sleep 30  # Give services some time to start
 
-      - name: Display Docker networks
-        run: docker network ls
-
-      - name: Display Docker network inspect
-        run: docker network inspect demo_autoparts_network
+      - name: Deploy MongoDB image to ttl.sh
+        if: env.DEPLOY_MONGODB == 'true'
+        run: |
+          docker tag mongo:4.4 ttl.sh/${{ env.TTL_IMAGE_DB_NAME }}:${{ env.TTL_IMAGE_DURATION }}
+          docker push ttl.sh/${{ env.TTL_IMAGE_DB_NAME }}:${{ env.TTL_IMAGE_DURATION }}
 
       - name: Deploy backend image to ttl.sh
         if: env.DEPLOY_BACKEND == 'true'
         run: |
-          docker tag autoparts-back:0.1.0 ttl.sh/autoparts-back:1h
-          docker push ttl.sh/autoparts-back:1h
+          docker tag autoparts-back:0.1.0 ttl.sh/${{ env.TTL_IMAGE_BACK_NAME }}:${{ env.TTL_IMAGE_DURATION }}
+          docker push ttl.sh/${{ env.TTL_IMAGE_BACK_NAME }}:${{ env.TTL_IMAGE_DURATION }}
 
       - name: Deploy frontend image to ttl.sh
         if: env.DEPLOY_FRONTEND == 'true'
         run: |
-          docker tag autoparts-front:0.1.0 ttl.sh/autoparts-front:1h
-          docker push ttl.sh/autoparts-front:1h
-
-      - name: Test MongoDB Connection
-        run: |
-          # Wait for MongoDB to be ready
-          sleep 10
-          
-          # Test MongoDB connection
-          # docker exec mongo mongodb://mongo:27017/autoparts_service_db --eval "printjson(db.serverStatus())
-          # docker exec mongo mongo --eval "printjson(db.serverStatus())"
-          
-
-      - name: Deploy MongoDB image to ttl.sh
-        if: env.DEPLOY_MONGODB == 'true'
-        run: |
-          docker tag mongo:4.4 ttl.sh/autoparts-db:1h
-          docker push ttl.sh/autoparts-db:1h
+          docker tag autoparts-front:0.1.0 ttl.sh/${{ env.TTL_IMAGE_FRONT_NAME }}:${{ env.TTL_IMAGE_DURATION }}
+          docker push ttl.sh/${{ env.TTL_IMAGE_FRONT_NAME }}:${{ env.TTL_IMAGE_DURATION }}
 
       - name: Clean up
         run: |
